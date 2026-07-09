@@ -1,23 +1,14 @@
-# OwonifaariIsaac - SEN 401 Lab Assessment
+FROM python:3.12-slim
 
-This repository is a copy of the lab-assessment tasks from
-`DevPort-spec/IsaacOwonifaari-sen-401-lab-assessment`.
+WORKDIR /code
 
-It contains four tasks (task-1 .. task-4). Each task is a self-contained Python
-exercise with its own requirements and README. This copy was created to
-consolidate the exercises under the `DevPort-spec/OwonifaariIsaac-sen-401-lab-assessment`
-repository.
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-## Structure
+COPY . .
 
-See each task's README.md for task-specific instructions. To run a task:
+RUN mkdir -p /code/db
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install -r task-2/requirements.txt
-python task-2/app.py
-```
+EXPOSE 8000
 
-(Replace `task-2` with the task you want to run.)
+CMD ["uvicorn", "main:api", "--host", "0.0.0.0", "--port", "8000"]
